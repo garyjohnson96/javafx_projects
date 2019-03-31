@@ -1,0 +1,138 @@
+Make a Cell Class that inherits Button
+Add the cells into an ArrayList
+Make 100 of the cells bombs and the rest not bombs
+Use ArrayList static shuffle method to mix the bombs up
+Use ArrayList to populate 2D Array
+Use a 2D Array to place the cells at coordinates in the grid
+Ask a cell if it has a bomb, then tell its neighbors to increment bomb counters
+Use a BorderPane as the root, a GridPane as the center, and make a toolbar for the top
+Don't use getTarget(); Put EventHandler on the Button
+Handling the edges - Exception Handling - If it tries to access out-of-bounds, process the exception and move on
+    Use separate try and catch blocks for each bounds exception.
+Use setStyle("-fx-border-color: black; -fx-background-color: aquamarine; -fx-border-width: 1px"); for successfully cleared cells
+TODO: If there's time, try to find a way to make sure that the first cell clicked is never a bomb.
+SAVE: Accessed last on 12/9/16 at 6:41 PM
+
+***DEBUGGING HELPS***
+Exception Handling for avery catch block
+    System.out.println("Exception thrown: " + e);
+
+Minesweeperish.fillGrid()
+    System.out.println("Rows: " + m_Controller.getCellsPerRow());
+    System.out.println("Columns: " + m_Controller.getCellsPerColumn());
+
+Controller.fillList()
+    System.out.println("Total Cells: " + getTotalCells());
+    System.out.println("Total Cells needed be cleared to win: " + m_TotalEmptyCells);
+
+Controller.addClearedCell()
+    System.out.println("Cleared Cells: " + m_ClearedCells);
+
+***BONUS***
+Minesweeperish
+    gameBoard.getChildren().add(m_GameBar.m_MenuPane);
+    public void showBonusMessage() {
+        Alert bonusMessage = new Alert(Alert.AlertType.INFORMATION);
+        bonusMessage.setTitle("Bonus Points");
+        bonusMessage.setHeaderText(null);
+        bonusMessage.setContentText("I implemented the following bonus features: \n");
+        bonusMessage.showAndWait();
+    }
+GameBar
+    /**
+     * ***BONUS***
+     * A package-private AnchorPane used to anchor the menuBar to the top-left corner of the GameBar.
+     */
+    AnchorPane m_MenuPane;
+
+    GameSettings settings = new GameSettings(controller);
+    settings.setMenuButtonActions(this, controller);
+
+    m_MenuPane = new AnchorPane(settings);
+    AnchorPane.setTopAnchor(settings, 0.0);
+    AnchorPane.setLeftAnchor(settings, 0.0);
+
+    this.getChildren().addAll(m_MenuPane, m_BombLabel, m_StartBtn, m_TimeLabel);
+Cell
+    private void takeBomb() {
+        m_Bomb = false;
+    }
+
+    private void printCell() {
+        System.out.println("Cell[" + m_X + "][" + m_Y + "]");
+    }
+Controller
+    /**
+     * ***BONUS***
+     * A private String that stores the difficulty to determine the amount of bombs a game has.
+     */
+    private String m_Difficulty;
+
+    /**
+     * ***BONUS***
+     * A public method that sets the mode of the game to either a small grid, medium grid, or large grid.
+     * @param mode the mode that determines the number of rows and columns of the game.
+     */
+    public void setMode(String mode) {
+        if (Objects.equals(mode, "Small")) {
+            m_CellsPerRow = 10;
+            m_CellsPerCol = 10;
+            setDifficulty(getDifficulty());
+//            setCellsPerRow(10);
+//            setCellsPerColumn(10);
+        } else if (Objects.equals(mode, "Medium")) {
+            m_CellsPerRow = 25;
+            m_CellsPerCol = 25;
+            setDifficulty(getDifficulty());
+//            setCellsPerRow(25);
+//            setCellsPerColumn(25);
+        } else if (Objects.equals(mode, "Large")){
+            m_CellsPerRow = 50;
+            m_CellsPerCol = 25;
+            setDifficulty(getDifficulty());
+//            setCellsPerRow(50);
+//            setCellsPerColumn(25);
+        }
+    }
+
+    /**
+     * ***BONUS***
+     * A public method that sets the amount of cells in the game that have bombs.
+     * @param difficulty the value that determines the percentage of the game grid is bombs.
+     *                   "Easy" is 10% of the grid.
+     *                   "Medium" is 25% of the grid.
+     *                   "Hard" is 40% of the grid.
+     */
+    public void setDifficulty(String difficulty) {
+        if (Objects.equals(difficulty, "Easy")) {
+            setBombs(10);
+        } else if (Objects.equals(difficulty, "Medium")) {
+            setBombs(25);
+        } else if (Objects.equals(difficulty, "Hard")) {
+            setBombs(40);
+        }
+        m_Difficulty = difficulty;
+    }
+
+    /**
+     * ***BONUS***
+     * A private method that returns the difficulty of the game.
+     * @return the difficulty to determine the percentage of bombs the game has.
+     */
+    private String getDifficulty() {
+        return m_Difficulty;
+    }
+
+    public void setRecord(String name, int time) {
+        PrintWriter fileWriter = null;
+        String fileName = "data/record";
+        try {
+            fileWriter = new PrintWriter(new FileOutputStream(fileName), false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (fileWriter != null) {
+            fileWriter.print("Winner    Time\n");
+            fileWriter.print(name + time + "seconds");
+        }
+    }
