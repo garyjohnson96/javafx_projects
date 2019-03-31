@@ -1,0 +1,104 @@
+CONTROLLER METHODS
+
+public void printList() {
+        for (PersonType i : list) {
+            System.out.println("Person Type: " + i.getPersonType());
+            if (i instanceof HourlyWorker) {
+                System.out.println("Name: " + ((HourlyWorker) i).getName());
+                System.out.println("Math: " + ((HourlyWorker) i).doMath());
+                System.out.println("Saying: " + ((HourlyWorker) i).saySomethingSmart());
+                System.out.println("IQ: " + ((HourlyWorker) i).getIQ());
+                System.out.println("Hours: " + ((HourlyWorker) i).getHoursWorked());
+                System.out.println("Income: " + ((HourlyWorker) i).getIncome());
+                System.out.println("----------------");
+            } else if (i instanceof ContractWorker) {
+                System.out.println("Name: " + ((ContractWorker) i).getName());
+                System.out.println("Math: " + ((ContractWorker) i).doMath());
+                System.out.println("Saying: " + ((ContractWorker) i).saySomethingSmart());
+                System.out.println("IQ: " + ((ContractWorker) i).getIQ());
+                System.out.println("Contracts: " + ((ContractWorker) i).getContractsCompleted());
+                System.out.println("Income: " + ((ContractWorker) i).getIncome());
+                System.out.println("----------------");
+            } else if (i instanceof Hobbit){
+                System.out.println("Name: " + ((Hobbit) i).getName());
+                System.out.println("Math: " + ((Hobbit) i).doMath());
+                System.out.println("Saying: " + ((Hobbit) i).saySomethingSmart());
+                System.out.println("Carrots: " + ((Hobbit) i).getCarrotsPicked());
+                System.out.println("----------------");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Controller controller = new Controller();
+        Scanner input = new Scanner(System.in);
+        String choice;
+        System.out.println("Add a person: [Y/N]");
+        choice = input.next();
+        while (!Objects.equals(choice, "N")) {
+            //controller.addPerson();
+            System.out.println("Add another person: [Y/N]");
+            choice = input.next();
+            if (Objects.equals(choice, "N")) {
+                System.out.println();
+            }
+        }
+        controller.printList();
+    }
+
+--------------------------------------------------------------------------------------------------------------
+
+HOBBIT METHOD
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        Hobbit hobbit;
+        hobbit = new Hobbit("Frodo", "1 + 1 = 2", "Flowers grow in soil.", 50);
+        System.out.println("Name: " + hobbit.getName());
+        System.out.println("Person: " + hobbit.getPersonType());
+        System.out.println("Math: " + hobbit.doMath());
+        System.out.println("Carrots: " + hobbit.getCarrotsPicked());
+        System.out.println("Saying: " + hobbit.saySomethingSmart());
+    }
+
+------------------------------------------------------------------------------------------------------------
+
+CONTRACT WORKER METHOD
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        ContractWorker contractWorker;
+        contractWorker = new ContractWorker("Grege", "10 / 2 = 5", "Jupiter is the biggest planet in our Solar System.", 100, 10, 200);
+        System.out.println("Name: " + contractWorker.getName());
+        System.out.println("Person: " + contractWorker.getPersonType());
+        System.out.println("IQ: " + contractWorker.getIQ());
+        System.out.println("Math: " + contractWorker.doMath());
+        System.out.println("Contracts: " + contractWorker.getContractsCompleted());
+        System.out.println("Income: " + contractWorker.getIncome());
+        System.out.println("Saying: " + contractWorker.saySomethingSmart());
+    }
+
+--------------------------------------------------------------------------------------------------------
+
+HOURLY WORKER METHOD
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        HourlyWorker hourlyWorker;
+        double income = 0;
+        hourlyWorker = new HourlyWorker("Gary", "1 * 2 = 2", "Turtles can live longer than 100 years.", 67, 13, 18.0);
+        System.out.println("Name: " + hourlyWorker.getName());
+        System.out.println("Person: " + hourlyWorker.getPersonType());
+        System.out.println("IQ: " + hourlyWorker.getIQ());
+        System.out.println("Math: " + hourlyWorker.doMath());
+        System.out.println("Hours: " + hourlyWorker.getHoursWorked());
+        income = hourlyWorker.getIncome();
+        System.out.println("Income: " + income);
+        System.out.println("Saying: " + hourlyWorker.saySomethingSmart());
+    }
